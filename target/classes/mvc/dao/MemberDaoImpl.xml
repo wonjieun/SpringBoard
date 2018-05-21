@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mvc.dao.MemberDao">
+
+	<select id="join" parameterType="mvc.dto.Writer">
+		INSERT INTO writer ( userid, userpw, usernick )
+		VALUES ( #{userid }, #{userpw }, #{usernick } )
+	</select>
+
+	<select id="selectByUserid"
+	 parameterType="mvc.dto.Writer"
+	 resultType="int">
+		SELECT count(*) FROM writer
+		WHERE userid = #{userid }
+	</select>
+
+	<select id="login"
+	 parameterType="mvc.dto.Writer"
+	 resultType="int">
+	 
+		SELECT count(*) FROM writer
+		WHERE userid = #{userid }
+			AND userpw = #{userpw }
+	</select>
+
+	<select id="getUsernick"
+	 parameterType="mvc.dto.Writer"
+	 resultType="String">
+		SELECT usernick FROM writer
+		WHERE userid = #{userid }	
+	</select>
+
+</mapper>
+
+	
+
+
+
+
+
+
+
+

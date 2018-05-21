@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mvc.dao.RecommendDao">
+
+	<select id="selectCountRecommend"
+	 parameterType="mvc.dto.Board"
+	 resultType="int">
+		SELECT COUNT(*) FROM recommend
+		WHERE userid=#{writerid }
+			 AND boardno=#{boardno }
+	</select>
+	
+	<insert id="insertRecommend" parameterType="mvc.dto.Board">
+		INSERT INTO recommend (userid, boardno)
+		 VALUES( #{writerid }, #{boardno } )
+	</insert>
+	
+	<delete id="deleteRecommend" parameterType="mvc.dto.Board">
+		DELETE FROM recommend
+		 WHERE userid = #{writerid } AND boardno = #{boardno }
+	</delete>
+	
+	<select id="selectTotalRecommend" parameterType="mvc.dto.Board"
+		resultType="int">
+		SELECT COUNT(*) FROM recommend
+		 WHERE boardno = #{boardno }
+	</select>
+</mapper>
+
+	
+
+
+
+
+
+
+
+

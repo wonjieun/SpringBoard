@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mvc.dao.CommentDao">
+
+	<select id="selectComment" parameterType="mvc.dto.Board"
+		resultType="mvc.dto.Comment">
+		SELECT rownum rnum, B.* FROM (
+			SELECT
+				commentno,
+				boardno,
+				userid,
+				commentwriter,
+				pw,
+				content,
+				writtendate
+			FROM commentTb
+			WHERE boardno = #{boardno }
+		) B
+		ORDER BY rnum
+	</select>
+	
+	<insert id="insertComment" parameterType="mvc.dto.Comment">
+		INSERT INTO commentTB ( commentno,boardno,userid,commentWriter,content )
+		VALUES ( commentTb_seq.nextval, #{boardNo }, #{userid }, #{commentWriter }, #{content } )
+	</insert>
+
+	<delete id="deleteComment" parameterType="mvc.dto.Comment">
+		DELETE commentTb WHERE
+		commentno = #{commentNo }
+	</delete>
+
+	<select id="countComment" parameterType="mvc.dto.Comment"
+		resultType="int">
+		SELECT COUNT(*) FROM commenttb WHERE commentno=#{commentNo}
+	</select>
+</mapper>
+
+	
+
+
+
+
+
+
+
+

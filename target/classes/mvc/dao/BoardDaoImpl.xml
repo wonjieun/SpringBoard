@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mvc.dao.BoardDao">
+
+	<sql id="selectBoard">
+		SELECT
+			boardno,
+			title,
+			writer,
+			writerid,
+			content,
+			hit,
+			(SELECT COUNT(*) FROM recommend WHERE boardno=board.boardno) AS recommend,
+			writtendate
+		FROM board
+	</sql>
+
+	<select id="selectAll" resultType="mvc.dto.Board">
+		<include refid="selectBoard" />
+		ORDER BY boardno
+	</select>
+
+	<select id="countAll" resultType="int">
+		SELECT COUNT(*) FROM board
+	</select>
+
+	<select id="selectPage"
+	 parameterType="mvc.util.Paging"
+	 resultType="mvc.dto.Board">
+		SELECT * FROM (
+			SELECT rownum rnum, B.* FROM (
+				<include refid="selectBoard" />
+				ORDER BY BOARDNO DESC
+			) B
+			ORDER BY rnum
+		) R
+		WHERE rnum BETWEEN #{startNo } AND #{endNo }
+	</select>
+
+	<sql id="selectSearch">
+			SELECT rownum rnum, B.* FROM (
+				<include refid="selectBoard" />
+				WHERE 1=1
+				<if test="search != null and search != ''">
+					AND title LIKE '%' || #{search } || '%' 
+				</if>
+				ORDER BY BOARDNO DESC
+			) B
+			ORDER BY rnum
+	</sql>
+	
+	<select id="selectPageSearch"
+	 parameterType="mvc.util.Paging"
+	 resultType="mvc.dto.Board">
+		SELECT * FROM (
+			<include refid="selectSearch" />
+		) R
+		WHERE rnum BETWEEN #{startNo } AND #{endNo }
+	</select>
+
+	<select id="countSearch"
+	 parameterType="mvc.util.Paging"
+	 resultType="int">
+		SELECT COUNT(*) FROM (
+			<include refid="selectSearch" />
+		) CNT
+	</select>
+
+	<insert id="write" parameterType="mvc.dto.Board">
+		INSERT INTO board(boardno,title,writerid,writer,content,hit,recommend)
+		VALUES( board_seq.nextval, #{title }, #{writerid }, #{writer }, #{content }, 0, 0)
+		<selectKey resultType="int" keyProperty="boardno" order="AFTER">
+			SELECT board_seq.currval FROM DUAL
+		</selectKey>
+	</insert>
+
+	<update id="updateHit" parameterType="mvc.dto.Board">
+		UPDATE board
+		SET hit = hit + 1
+		WHERE boardno = #{boardno }
+	</update>
+
+	<select id="selectBoardByBoardNo"
+		parameterType="mvc.dto.Board"
+		resultType="mvc.dto.Board">
+		
+		<include refid="selectBoard" />
+		WHERE boardno = #{boardno }
+	</select>
+
+	<update id="update" parameterType="mvc.dto.Board">
+		UPDATE board
+		SET title = #{title }
+			, content = #{content }
+		WHERE boardno = #{boardno }
+	</update>
+
+	<update id="delete" parameterType="mvc.dto.Board">
+		DELETE board
+		WHERE boardno = #{boardno }
+	</update>
+
+	<delete id="deleteBoardList" parameterType="String">
+		DELETE FROM board
+		WHERE boardno IN ( ${_parameter } )
+	</delete>
+	
+	<insert id="insertFile" parameterType="mvc.dto.UploadFile">
+		INSERT INTO board_file(boardno,fileno,original_filename,stored_filename,file_size)
+		VALUES (
+			#{boardno },
+			seq_uploadfile.nextval,
+			#{original_filename },
+			#{stored_filename },
+			#{file_size }
+		)
+	</insert>
+	
+</mapper>
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
