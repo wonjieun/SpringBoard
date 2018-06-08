@@ -144,7 +144,7 @@ function deleteComment(commentNo) {
 글제목 : ${view.title }<br>
 아이디 : ${view.writerid }<br>
 이름 : ${view.writer }<br>
-본문 : ${view.content }<br>
+본문 : ${k.content }<br>
 조회수 : ${view.hit }<br>
 추천수 : <span id="recommend">${view.recommend }</span><br>
 작성일 : <fmt:formatDate value="${view.writtendate }"

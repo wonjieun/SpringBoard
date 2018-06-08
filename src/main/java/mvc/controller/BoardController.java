@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import mvc.dao.FileDao;
 import mvc.dto.Board;
 import mvc.dto.Comment;
 import mvc.dto.UploadFile;
