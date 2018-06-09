@@ -32,7 +32,7 @@
 		SELECT * FROM (
 			SELECT rownum rnum, B.* FROM (
 				<include refid="selectBoard" />
-				ORDER BY BOARDNO DESC
+				ORDER BY boardno DESC
 			) B
 			ORDER BY rnum
 		) R
