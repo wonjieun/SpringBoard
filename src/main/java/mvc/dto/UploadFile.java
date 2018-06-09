@@ -2,6 +2,21 @@ package mvc.dto;
 
 import java.util.Date;
 
+/**
+ *
+ * <pre>
+ * mvc.dto
+ * UploadFile.java
+ * </pre>
+ * 
+ * 파일첨부가 없을 경우 Board테이블의 속성이 null인 것이 많다. = 별로다
+ * 따라서, 파일첨부용 테이블을 따로 생성하여 만들어준다
+ * 
+ * @title  : 
+ * @since  : 2018. 5. 22.
+ * @author : jieun
+ *
+ */
 public class UploadFile {
 	private int boardno;
 	private int fileno;

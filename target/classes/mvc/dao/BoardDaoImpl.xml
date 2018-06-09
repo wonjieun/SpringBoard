@@ -92,13 +92,12 @@
 
 	<update id="update" parameterType="mvc.dto.Board">
 		UPDATE board
-		SET title = #{title }
-			, content = #{content }
+		SET title = #{title }, content = #{content }
 		WHERE boardno = #{boardno }
 	</update>
 
 	<update id="delete" parameterType="mvc.dto.Board">
-		DELETE board
+		DELETE FROM board
 		WHERE boardno = #{boardno }
 	</update>
 
@@ -119,17 +118,3 @@
 	</insert>
 	
 </mapper>
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
